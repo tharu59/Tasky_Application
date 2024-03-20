@@ -18,7 +18,7 @@
       referrerpolicy="no-referrer"
     />
   </head>
-  <body>
+  <body onload="loadInitialData()">
     <!-- button on small screen size -->
     <div class="add__new__btn__mobile__only d-none d-sm-block d-md-none">
       <button
@@ -51,7 +51,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form onsubmit="return false">
               <!-- img -->
               <div class="mb-3">
                 <label for="imageUrl" class="form-label">Image URL</label>
@@ -112,7 +112,7 @@
             >
               Close
             </button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-primary" onclick="handleSubmit()">Save changes</button>
           </div>
         </div>
       </div>
@@ -122,7 +122,7 @@
 
     <div
       class="modal fade"
-      id="exampleModal"
+      id="showTask"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -131,7 +131,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Task Details
+              Task Details...
             </h1>
             <button
               type="button"

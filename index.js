@@ -52,14 +52,17 @@ const htmlTaskContent = ({ id, title, description, type, url }) => `
         <button type='button' class='btn btn-outline-info mr-1.5' name=${id}>
           <i class='fas fa-pencil-alt name=${id}'></i>
         </button>
-        <button type='button' class='btn btn-outline-danger mr-1.5' name=${id}>
-          <i class='fas fa-trash name=${id}'></i>
+        <button type='button' class='btn btn-outline-danger mr-1.5' name=${id} onclick='deleteTask.apply(this, arguments)'>
+          <i class='fas fa-trash-alt' name='${id}' ></i>
         </button>
       </div>
       <div class='card-body'>
         ${
-          url &&
-          `<img width="100%" src=${url} alt='Card' class='card-img-top md-3 rounded-lg' />`
+          // url &&
+          // `<img width="100%" src=${url} alt='Card' class='card-img-top md-3 rounded-lg' />`
+          url
+            ? `<img width="100%" src=${url} alt='Card' class='card-img-top md-3 rounded-lg' />`
+            : `<img width="100%" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAOVBMVEX///+hoaGampqdnZ2srKy0tLSoqKjZ2dnq6ur39/fAwMDt7e3g4OC7u7vw8PD6+vqTk5PS0tLIyMhAQKZNAAACjElEQVR4nO3a2XKqQBRAUXsCZGz4/4+9EhCQsS50FYeqvV41hm17Gkh8vQAAAAAAAAAAAAAAAAAAAAAAAAAACCIvXFB1dWNMo01I2iY3xqRGGR2KUcrmt8aYOksCyZ2+OUaH+/VlQUwwxGwRFJM3aXNtYxUTk7hIfRTvCy8mJSZxpm1Rxl2okRKTdi1K6QsXJEJiEvuNUfb80giJiaNvi9Ll6RcTElOrMSY7/WJCYnI7xJjHr0zpvjNzZTsTEjN+zvzueTPVqtl+VErM5y5Nt+vi472dufisnyk2HxYT8/rcjHjtdgcm9n+LV289Lifm9aoOTpel7z+KW/udpJgjw4YXbTzhQTGpHnbvjbF5Tkzu1Wh9bJ4TM21RanWjeExMZH5iVsfmKTHjwPTSlSc9JCbxsxZl4uWzHhKzaFFGLa/hZMZks9PibGA6bvFjImOs99H0fa/nA9NZXHJKjGlvoY0ar22WA9Ob/6TAmObvQLUbatbXpd2fZ2cbeTFxf6T+e5Z3awPTbQKzyxpxMeXwpw3fve/11odsOTbiYsZ16MYm22sx6ue+VFpMMzlUXVST6/71Gju9BxIWk6vpgPh4Z2D6munYyIqp7O+xm+agRf3cDciKKebHvrkrj73RODaiYurDQ1+rGU9IkmKS1Uuw45rhbkBQzPto2LdE37sBQTHpyZbP/tyPjZyYyX81/rumHxsxMYk9uzCtRlRMdXZguqXpxkZKTHN8xLs1LpMTE5/blSc17XWcjJjEHp/qD2LasZER00T2qsglMmKqMguglBATv0NJbo9RLg2liMy9MTrgdzS1uTemjsIqzn+L4Loqj4M6//UOAAAAAAAAAAAAAAAAAAAAAAAAAMBl/wCSoC7OdsS5KwAAAABJRU5ErkJggg==" alt='Card' class='card-img-top md-3 rounded-lg' />`
         }
         <h4 class='card-title task__card__title'>${title}</h4>
         <p class='description trim-3-lines text-muted'>${description}</p>
@@ -68,7 +71,7 @@ const htmlTaskContent = ({ id, title, description, type, url }) => `
         </div>
       </div>
       <div class='card-footer'>
-        <button type='button' class='btn btn-outline-primary float-right data-bs-toggle="modal" data-bs-target="#showTask"'>Open Task</button>
+        <button type='button' class='btn btn-outline-primary float-right' data-bs-toggle="modal" data-bs-target="#showTask" onclick='openTask.apply(this, arguments)' id=${id}>Open Task</button>
       </div>
     </div>
   </div>
@@ -80,8 +83,11 @@ const htmlModalContent = ({ id, title, description, url }) => {
   return `
    <div id=${id}>
     ${
-      url &&
-      `<img width="100%" src=${url} alt='Card' class='img-fluid place__holder__image mb-3' />`
+      // url &&
+      // `<img width="100%" src=${url} alt='Card' class='img-fluid place__holder__image mb-3' />`
+      url
+        ? `<img width="100%" src=${url} alt='Card' class='card-img-top md-3 rounded-lg' />`
+        : `<img width="100%" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAOVBMVEX///+hoaGampqdnZ2srKy0tLSoqKjZ2dnq6ur39/fAwMDt7e3g4OC7u7vw8PD6+vqTk5PS0tLIyMhAQKZNAAACjElEQVR4nO3a2XKqQBRAUXsCZGz4/4+9EhCQsS50FYeqvV41hm17Gkh8vQAAAAAAAAAAAAAAAAAAAAAAAAAACCIvXFB1dWNMo01I2iY3xqRGGR2KUcrmt8aYOksCyZ2+OUaH+/VlQUwwxGwRFJM3aXNtYxUTk7hIfRTvCy8mJSZxpm1Rxl2okRKTdi1K6QsXJEJiEvuNUfb80giJiaNvi9Ll6RcTElOrMSY7/WJCYnI7xJjHr0zpvjNzZTsTEjN+zvzueTPVqtl+VErM5y5Nt+vi472dufisnyk2HxYT8/rcjHjtdgcm9n+LV289Lifm9aoOTpel7z+KW/udpJgjw4YXbTzhQTGpHnbvjbF5Tkzu1Wh9bJ4TM21RanWjeExMZH5iVsfmKTHjwPTSlSc9JCbxsxZl4uWzHhKzaFFGLa/hZMZks9PibGA6bvFjImOs99H0fa/nA9NZXHJKjGlvoY0ar22WA9Ob/6TAmObvQLUbatbXpd2fZ2cbeTFxf6T+e5Z3awPTbQKzyxpxMeXwpw3fve/11odsOTbiYsZ16MYm22sx6ue+VFpMMzlUXVST6/71Gju9BxIWk6vpgPh4Z2D6munYyIqp7O+xm+agRf3cDciKKebHvrkrj73RODaiYurDQ1+rGU9IkmKS1Uuw45rhbkBQzPto2LdE37sBQTHpyZbP/tyPjZyYyX81/rumHxsxMYk9uzCtRlRMdXZguqXpxkZKTHN8xLs1LpMTE5/blSc17XWcjJjEHp/qD2LasZER00T2qsglMmKqMguglBATv0NJbo9RLg2liMy9MTrgdzS1uTemjsIqzn+L4Loqj4M6//UOAAAAAAAAAAAAAAAAAAAAAAAAAMBl/wCSoC7OdsS5KwAAAABJRU5ErkJggg==" alt='Card' class='card-img-top md-3 rounded-lg' />`
     }
     <strong class='text-muted text-sm'>Created on: ${date.toString()}</strong>
     <h2 class='my-3'>${title}</h2>
@@ -136,4 +142,31 @@ const handleSubmit = (event) => {
 
   // update the same on localStorage too
   updateLocalStorage();
+};
+
+// openTask
+const openTask = (e) => {
+  if (!e) e = window.event;
+  const getTask = state.taskList.find(({ id }) => id === e.target.id);
+  taskModal.innerHTML = htmlModalContent(getTask);
+};
+
+// delete task
+const deleteTask = (e) => {
+  if (!e) e = window.event;
+  const targetId = e.target.getAttribute("name");
+  // console.log(targetId);
+  const type = e.target.tagName;
+  const removeTask = state.taskList.filter(({ id }) => id !== targetId);
+  updateLocalStorage();
+  if (type === "BUTTON") {
+    // console.log(e.target.parentNode.parentNode.parentNode.parentNode);
+    return e.target.parentNode.parentNode.parentNode.parentNode.removeChild(
+      e.target.parentNode.parentNode.parentNode
+    );
+  } else if (type === "I") {
+    return e.target.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(
+      e.target.parentNode.parentNode.parentNode.parentNode
+    );
+  }
 };

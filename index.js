@@ -49,7 +49,7 @@ const htmlTaskContent = ({ id, title, description, type, url }) => `
   <div class="col-md-6 col-lg-4 mt-3" id=${id} >
     <div class='card shadow-sm task__card'>
       <div class='card-header d-flex justify-content-end task__card__header'>
-        <button type='button' class='btn btn-outline-info mr-1.5' name=${id}>
+        <button type='button' class='btn btn-outline-info mr-1.5' name=${id} onclick='editTask.apply(this, arguments)'>
           <i class='fas fa-pencil-alt name=${id}'></i>
         </button>
         <button type='button' class='btn btn-outline-danger mr-1.5' name=${id} onclick='deleteTask.apply(this, arguments)'>
@@ -153,7 +153,6 @@ const openTask = (e) => {
 
 // delete task
 const deleteTask = (e) => {
-  if (!e) e = window.event;
   const targetId = e.target.getAttribute("name");
   // console.log(targetId);
   const type = e.target.tagName;
@@ -169,4 +168,97 @@ const deleteTask = (e) => {
       e.target.parentNode.parentNode.parentNode.parentNode
     );
   }
+};
+
+// edit task
+const editTask = (e) => {
+  if (!e) e = window.event;
+  const targetId = e.target.id;
+  const type = e.target.tagName;
+  let parentNode;
+  let taskTitle;
+  let taskDescription;
+  let taskType;
+  let submitButton;
+
+  if (type === "BUTTON") {
+    parentNode = e.target.parentNode.parentNode;
+  } else {
+    parentNode = e.target.parentNode.parentNode.parentNode;
+  }
+  // taskTitle = parentNode.childNodes[3].childNodes[7].childNodes;
+  // console.log(taskTitle);
+  taskTitle = parentNode.childNodes[3].childNodes[3];
+  taskDescription = parentNode.childNodes[3].childNodes[5];
+  taskType = parentNode.childNodes[3].childNodes[7].childNodes[1];
+  submitButton = parentNode.childNodes[5].childNodes[1];
+  // console.log(taskTitle, taskDescription, taskType, submitButton);
+  taskTitle.setAttribute("contenteditable", "true");
+  taskDescription.setAttribute("contenteditable", "true");
+  taskType.setAttribute("contenteditable", "true");
+
+  submitButton.setAttribute("onclick", "saveEdit.apply(this, arguments)");
+  // data-bs-toggle="modal" data-bs-target="#showTask"
+  submitButton.removeAttribute("data-bs-toggle");
+  submitButton.removeAttribute("data-bs-target");
+  submitButton.innerHTML = "Save Changes";
+};
+
+// save edit
+const saveEdit = (e) => {
+  if (!e) e = window.event;
+  const targetId = e.target.id;
+  const parentNode = e.target.parentNode.parentNode;
+  // console.log(parentNode.childNodes);
+  const taskTitle = parentNode.childNodes[3].childNodes[3];
+  const taskDescription = parentNode.childNodes[3].childNodes[5];
+  const taskType = parentNode.childNodes[3].childNodes[7].childNodes[1];
+  const submitButton = parentNode.childNodes[5].childNodes[1];
+
+  const updatedData = {
+    taskTitle: taskTitle.innerHTML,
+    taskDescription: taskDescription.innerHTML,
+    taskType: taskType.innerHTML,
+  };
+  let stateCopy = state.taskList;
+  stateCopy = stateCopy.map((task) =>
+    task.id === targetId
+      ? {
+          id: task.id,
+          title: updatedData.taskTitle,
+          description: updatedData.taskDescription,
+          type: updatedData.taskType,
+          url: task.url,
+        }
+      : task
+  );
+  state.taskList = stateCopy;
+  updateLocalStorage();
+
+  taskTitle.setAttribute("contenteditable", "false");
+  taskDescription.setAttribute("contenteditable", "false");
+  taskType.setAttribute("contenteditable", "false");
+
+  submitButton.setAttribute("onclick", "openTask.apply(this, arguments)");
+  submitButton.setAttribute("data-bs-toggle", "modal");
+  submitButton.setAttribute("data-bs-target", "#showTask");
+  submitButton.innerHTML = "Open Task";
+};
+
+// search
+const searchTask = (e) => {
+  if (!e) e = window.event;
+
+  while (taskContents.firstChild) {
+    taskContents.removeChild(taskContents.firstChild);
+  }
+  const resultData = state.taskList.filter(({ title }) => {
+    title.toLowerCase().includes(e.target.value.toLowerCase());
+  });
+
+  // console.log(resultData);
+
+  resultData.map((cardData) => {
+    taskContents.insertAdjacentHTML("beforeend", htmlTaskContent(cardData));
+  });
 };

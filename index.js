@@ -48,12 +48,12 @@ const taskModal = document.querySelector(".task__modal__body");
 const htmlTaskContent = ({ id, title, description, type, url }) => `
   <div class="col-md-6 col-lg-4 mt-3" id=${id} >
     <div class='card shadow-sm task__card'>
-      <div class='card-header d-flex justify-content-end task__card__header'>
-        <button type='button' class='btn btn-outline-info mr-1.5' name=${id} onclick='editTask.apply(this, arguments)'>
-          <i class='fas fa-pencil-alt name=${id}'></i>
+      <div class='card-header d-flex gap-2 justify-content-end task__card__header'>
+        <button type='button' class='btn btn-outline-info mr-2' name=${id} onclick="editTask.apply(this, arguments)">
+          <i class='fas fa-pencil-alt' name=${id}></i>
         </button>
-        <button type='button' class='btn btn-outline-danger mr-1.5' name=${id} onclick='deleteTask.apply(this, arguments)'>
-          <i class='fas fa-trash-alt' name='${id}' ></i>
+        <button type='button' class='btn btn-outline-danger mr-2' name=${id} onclick="deleteTask.apply(this, arguments)">
+          <i class='fas fa-trash-alt' name=${id} ></i>
         </button>
       </div>
       <div class='card-body'>
@@ -61,11 +61,11 @@ const htmlTaskContent = ({ id, title, description, type, url }) => `
           // url &&
           // `<img width="100%" src=${url} alt='Card' class='card-img-top md-3 rounded-lg' />`
           url
-            ? `<img width="100%" src=${url} alt='Card' class='card-img-top md-3 rounded-lg' />`
-            : `<img width="100%" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAOVBMVEX///+hoaGampqdnZ2srKy0tLSoqKjZ2dnq6ur39/fAwMDt7e3g4OC7u7vw8PD6+vqTk5PS0tLIyMhAQKZNAAACjElEQVR4nO3a2XKqQBRAUXsCZGz4/4+9EhCQsS50FYeqvV41hm17Gkh8vQAAAAAAAAAAAAAAAAAAAAAAAAAACCIvXFB1dWNMo01I2iY3xqRGGR2KUcrmt8aYOksCyZ2+OUaH+/VlQUwwxGwRFJM3aXNtYxUTk7hIfRTvCy8mJSZxpm1Rxl2okRKTdi1K6QsXJEJiEvuNUfb80giJiaNvi9Ll6RcTElOrMSY7/WJCYnI7xJjHr0zpvjNzZTsTEjN+zvzueTPVqtl+VErM5y5Nt+vi472dufisnyk2HxYT8/rcjHjtdgcm9n+LV289Lifm9aoOTpel7z+KW/udpJgjw4YXbTzhQTGpHnbvjbF5Tkzu1Wh9bJ4TM21RanWjeExMZH5iVsfmKTHjwPTSlSc9JCbxsxZl4uWzHhKzaFFGLa/hZMZks9PibGA6bvFjImOs99H0fa/nA9NZXHJKjGlvoY0ar22WA9Ob/6TAmObvQLUbatbXpd2fZ2cbeTFxf6T+e5Z3awPTbQKzyxpxMeXwpw3fve/11odsOTbiYsZ16MYm22sx6ue+VFpMMzlUXVST6/71Gju9BxIWk6vpgPh4Z2D6munYyIqp7O+xm+agRf3cDciKKebHvrkrj73RODaiYurDQ1+rGU9IkmKS1Uuw45rhbkBQzPto2LdE37sBQTHpyZbP/tyPjZyYyX81/rumHxsxMYk9uzCtRlRMdXZguqXpxkZKTHN8xLs1LpMTE5/blSc17XWcjJjEHp/qD2LasZER00T2qsglMmKqMguglBATv0NJbo9RLg2liMy9MTrgdzS1uTemjsIqzn+L4Loqj4M6//UOAAAAAAAAAAAAAAAAAAAAAAAAAMBl/wCSoC7OdsS5KwAAAABJRU5ErkJggg==" alt='Card' class='card-img-top md-3 rounded-lg' />`
+            ? `<img width='100%' height='150px' style="object-fit: cover; object-position: center"  src=${url} alt='card image cap' class='card-image-top md-3 rounded-lg' />`
+            : `<img width='100%' height='150px' style="object-fit: cover; object-position: center"  src="https://tse3.mm.bing.net/th?id=OIP.LZsJaVHEsECjt_hv1KrtbAHaHa&pid=Api&P=0" alt='card image cap' class='card-image-top md-3 rounded-lg' />`
         }
-        <h4 class='card-title task__card__title'>${title}</h4>
-        <p class='description trim-3-lines text-muted'>${description}</p>
+        <h4 class='task__card__title'>${title}</h4>
+        <p class='description trim-3-lines text-muted' data-gram_editor='false'>${description}</p>
         <div class='tags text-white d-flex-wrap'>
           <span class='badge bg-primary m-1'>${type}</span>
         </div>
@@ -86,12 +86,14 @@ const htmlModalContent = ({ id, title, description, url }) => {
       // url &&
       // `<img width="100%" src=${url} alt='Card' class='img-fluid place__holder__image mb-3' />`
       url
-        ? `<img width="100%" src=${url} alt='Card' class='card-img-top md-3 rounded-lg' />`
-        : `<img width="100%" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAOVBMVEX///+hoaGampqdnZ2srKy0tLSoqKjZ2dnq6ur39/fAwMDt7e3g4OC7u7vw8PD6+vqTk5PS0tLIyMhAQKZNAAACjElEQVR4nO3a2XKqQBRAUXsCZGz4/4+9EhCQsS50FYeqvV41hm17Gkh8vQAAAAAAAAAAAAAAAAAAAAAAAAAACCIvXFB1dWNMo01I2iY3xqRGGR2KUcrmt8aYOksCyZ2+OUaH+/VlQUwwxGwRFJM3aXNtYxUTk7hIfRTvCy8mJSZxpm1Rxl2okRKTdi1K6QsXJEJiEvuNUfb80giJiaNvi9Ll6RcTElOrMSY7/WJCYnI7xJjHr0zpvjNzZTsTEjN+zvzueTPVqtl+VErM5y5Nt+vi472dufisnyk2HxYT8/rcjHjtdgcm9n+LV289Lifm9aoOTpel7z+KW/udpJgjw4YXbTzhQTGpHnbvjbF5Tkzu1Wh9bJ4TM21RanWjeExMZH5iVsfmKTHjwPTSlSc9JCbxsxZl4uWzHhKzaFFGLa/hZMZks9PibGA6bvFjImOs99H0fa/nA9NZXHJKjGlvoY0ar22WA9Ob/6TAmObvQLUbatbXpd2fZ2cbeTFxf6T+e5Z3awPTbQKzyxpxMeXwpw3fve/11odsOTbiYsZ16MYm22sx6ue+VFpMMzlUXVST6/71Gju9BxIWk6vpgPh4Z2D6munYyIqp7O+xm+agRf3cDciKKebHvrkrj73RODaiYurDQ1+rGU9IkmKS1Uuw45rhbkBQzPto2LdE37sBQTHpyZbP/tyPjZyYyX81/rumHxsxMYk9uzCtRlRMdXZguqXpxkZKTHN8xLs1LpMTE5/blSc17XWcjJjEHp/qD2LasZER00T2qsglMmKqMguglBATv0NJbo9RLg2liMy9MTrgdzS1uTemjsIqzn+L4Loqj4M6//UOAAAAAAAAAAAAAAAAAAAAAAAAAMBl/wCSoC7OdsS5KwAAAABJRU5ErkJggg==" alt='Card' class='card-img-top md-3 rounded-lg' />`
+        ? // ? `<img width="100%" src=${url} alt='Card' class='card-img-top md-3 rounded-lg' />`
+          // : `<img width="100%" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAOVBMVEX///+hoaGampqdnZ2srKy0tLSoqKjZ2dnq6ur39/fAwMDt7e3g4OC7u7vw8PD6+vqTk5PS0tLIyMhAQKZNAAACjElEQVR4nO3a2XKqQBRAUXsCZGz4/4+9EhCQsS50FYeqvV41hm17Gkh8vQAAAAAAAAAAAAAAAAAAAAAAAAAACCIvXFB1dWNMo01I2iY3xqRGGR2KUcrmt8aYOksCyZ2+OUaH+/VlQUwwxGwRFJM3aXNtYxUTk7hIfRTvCy8mJSZxpm1Rxl2okRKTdi1K6QsXJEJiEvuNUfb80giJiaNvi9Ll6RcTElOrMSY7/WJCYnI7xJjHr0zpvjNzZTsTEjN+zvzueTPVqtl+VErM5y5Nt+vi472dufisnyk2HxYT8/rcjHjtdgcm9n+LV289Lifm9aoOTpel7z+KW/udpJgjw4YXbTzhQTGpHnbvjbF5Tkzu1Wh9bJ4TM21RanWjeExMZH5iVsfmKTHjwPTSlSc9JCbxsxZl4uWzHhKzaFFGLa/hZMZks9PibGA6bvFjImOs99H0fa/nA9NZXHJKjGlvoY0ar22WA9Ob/6TAmObvQLUbatbXpd2fZ2cbeTFxf6T+e5Z3awPTbQKzyxpxMeXwpw3fve/11odsOTbiYsZ16MYm22sx6ue+VFpMMzlUXVST6/71Gju9BxIWk6vpgPh4Z2D6munYyIqp7O+xm+agRf3cDciKKebHvrkrj73RODaiYurDQ1+rGU9IkmKS1Uuw45rhbkBQzPto2LdE37sBQTHpyZbP/tyPjZyYyX81/rumHxsxMYk9uzCtRlRMdXZguqXpxkZKTHN8xLs1LpMTE5/blSc17XWcjJjEHp/qD2LasZER00T2qsglMmKqMguglBATv0NJbo9RLg2liMy9MTrgdzS1uTemjsIqzn+L4Loqj4M6//UOAAAAAAAAAAAAAAAAAAAAAAAAAMBl/wCSoC7OdsS5KwAAAABJRU5ErkJggg==" alt='Card' class='card-img-top md-3 rounded-lg' />`
+          `<img width='100%' src=${url} alt='card image here  class='img-fluid place__holder__image mb-3'/>`
+        : `<img width='100%' height='150px' style="object-fit: cover; object-position: center"  src="https://tse3.mm.bing.net/th?id=OIP.LZsJaVHEsECjt_hv1KrtbAHaHa&pid=Api&P=0" alt='card image cap' class='card-image-top md-3 rounded-lg' />`
     }
-    <strong class='text-muted text-sm'>Created on: ${date.toString()}</strong>
-    <h2 class='my-3'>${title}</h2>
-    <p class='text-muted'>${description}</p>
+    <strong class=' text-sm text-muted'>Created on: ${date.toDateString()}</strong>
+    <h2 class="my-3">${title}</h2>
+    <p class='lead'>${description}</p>
    </div>
   `;
 };
@@ -153,29 +155,31 @@ const openTask = (e) => {
 
 // delete task
 const deleteTask = (e) => {
-  const targetId = e.target.getAttribute("name");
+  if (!e) e = window.event;
+  const targetID = e.target.getAttribute("name");
   // console.log(targetId);
   const type = e.target.tagName;
-  const removeTask = state.taskList.filter(({ id }) => id !== targetId);
+  const removeTask = state.taskList.filter(({ id }) => id !== targetID);
+  state.taskList = removeTask;
   updateLocalStorage();
   if (type === "BUTTON") {
     // console.log(e.target.parentNode.parentNode.parentNode.parentNode);
     return e.target.parentNode.parentNode.parentNode.parentNode.removeChild(
-      e.target.parentNode.parentNode.parentNode
+      e.parentNode.parentNode.parentNode
     );
-  } else if (type === "I") {
+  } else
     return e.target.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(
       e.target.parentNode.parentNode.parentNode.parentNode
     );
-  }
 };
 
 // edit task
 const editTask = (e) => {
   if (!e) e = window.event;
-  const targetId = e.target.id;
+  const targetID = e.target.id;
   const type = e.target.tagName;
   let parentNode;
+  // let taskList;
   let taskTitle;
   let taskDescription;
   let taskType;
@@ -207,7 +211,7 @@ const editTask = (e) => {
 // save edit
 const saveEdit = (e) => {
   if (!e) e = window.event;
-  const targetId = e.target.id;
+  const targetID = e.target.id;
   const parentNode = e.target.parentNode.parentNode;
   // console.log(parentNode.childNodes);
   const taskTitle = parentNode.childNodes[3].childNodes[3];
@@ -222,7 +226,7 @@ const saveEdit = (e) => {
   };
   let stateCopy = state.taskList;
   stateCopy = stateCopy.map((task) =>
-    task.id === targetId
+    task.id === targetID
       ? {
           id: task.id,
           title: updatedData.taskTitle,

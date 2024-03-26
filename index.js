@@ -256,9 +256,9 @@ const searchTask = (e) => {
   while (taskContents.firstChild) {
     taskContents.removeChild(taskContents.firstChild);
   }
-  const resultData = state.taskList.filter(({ title }) => {
-    title.toLowerCase().includes(e.target.value.toLowerCase());
-  });
+  const resultData = state.taskList.filter(({ title }) => 
+    title.toLowerCase().includes(e.target.value.toLowerCase())
+  );
 
   // console.log(resultData);
 

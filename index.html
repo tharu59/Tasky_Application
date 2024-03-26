@@ -209,7 +209,8 @@
                 class="form-control"
                 placeholder="search your task here..."
                 aria-label="Search Task"
-                aria-describedby="basic-wrapping"
+                aria-describedby="addon-wrapping"
+                oninput="searchTask.apply(this, arguments)"
               />
               <span class="input-group-text" id="addon-wrapping">
                 <i class="fas fa-search"></i>

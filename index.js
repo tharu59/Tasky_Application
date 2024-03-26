@@ -256,7 +256,7 @@ const searchTask = (e) => {
   while (taskContents.firstChild) {
     taskContents.removeChild(taskContents.firstChild);
   }
-  const resultData = state.taskList.filter(({ title }) => 
+  const resultData = state.taskList.filter(({ title }) =>
     title.toLowerCase().includes(e.target.value.toLowerCase())
   );
 
@@ -264,5 +264,6 @@ const searchTask = (e) => {
 
   resultData.map((cardData) => {
     taskContents.insertAdjacentHTML("beforeend", htmlTaskContent(cardData));
+    // taskContents.insertAdjacentHTML("beforeend", htmlModalContent(cardData));
   });
 };
